@@ -1,18 +1,23 @@
 ﻿#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <cmath>
+#include <stdio.h>
+#include <time.h>
 int gameMap[40 * 40];
 sf::RenderWindow window(sf::VideoMode(1000, 1000), "Mazegame");
 sf::RectangleShape displayRects[40 * 40];
 sf::Texture wallTexture1;
 sf::Texture wallTexture2;
 sf::Texture playerTex;
+sf::Font font;
 void Map1();
 void Map2();
-
+void wait(double );
 
 int main() {
-    sf::Vector2i player = sf::Vector2i(20, 0);
+    
+	
+    sf::Vector2i player = sf::Vector2i(20, 38);
     playerTex.loadFromFile("smile.png");
     sf::Sprite playerSprite;
     playerSprite.setTexture(playerTex);
@@ -45,8 +50,8 @@ int main() {
                     newPosition.x -= 1;
                     break;
                 }
-
-                // Check for collision
+               
+                
                 if (gameMap[newPosition.x + newPosition.y * 40] != 1) {
                     player = newPosition;
                     std::cout << "Player position: (" << player.x << ", " << player.y << ")" << std::endl;
@@ -55,20 +60,34 @@ int main() {
 
             playerSprite.setPosition(player.x * 25.f, player.y * 25.f);
         }
-        window.clear(sf::Color(255, 255, 255));
+        window.clear(sf::Color(0, 0, 0));
+        if ((player.x == 20 && player.y == 39)and(Mode==0))
+        {
+            player.x = 20;
+            player.y = 0;
+            window.clear(sf::Color(0, 0, 0));
 
+            sf::Font font;
+            if (!font.loadFromFile("ARIAL.ttf")) {  // ต้องมีไฟล์ฟอนต์ (เช่น arial.ttf)
+                return -1;  // ถ้าไม่สามารถโหลดฟอนต์ได้จะปิดโปรแกรม
+            }
+            sf::Text text("Waitting..", font, 100);  // ข้อความ, ฟอนต์, ขนาดตัวอักษร
+            text.setFillColor(sf::Color::White);  // ตั้งสีข้อความเป็นสีขาว
+            text.setPosition(250, 500);  // ตั้งตำแหน่งข้อความ
+			window.draw(text);  // วาดข้อความ
+            window.display();
+            wait(2);
+           
+            window.clear(sf::Color(0, 0, 0));
+
+            Mode = 1;
+        }
         for (int i = 0; i < 40 * 40; i++) {
             window.draw(displayRects[i]);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) { window.close(); }
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) { window.close(); }//ถ้ากด esc จะปิดโปรแกรม
         window.draw(playerSprite);
-        if (player.x == 20 && player.y == 39) 
-        { 
-			player.x = 20;
-			player.y = 0;
-            window.clear(); 
-            Mode = 1; 
-        }
+        
         window.display();
     }
     return 0;
@@ -206,6 +225,10 @@ void Map2() {
 
         }
     }
+}
+void wait(double seconds) {
+    clock_t start_time = clock();
+    while ((double)(clock() - start_time) / CLOCKS_PER_SEC < seconds);
 }
 
 
