@@ -1,4 +1,4 @@
-﻿#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <cmath>
 #include <stdio.h>
@@ -18,7 +18,7 @@ void Map1();
 void Map2();
 void wait(double);
 void PuzzleMain();
-void Puzzle_map1(int,int,int);
+void Puzzle_map1(int, int, int);
 
 using namespace sf;
 using namespace std;
@@ -67,15 +67,15 @@ Puzzle getRandomCodePuzzle(const std::vector<Puzzle>& puzzles) {
 }
 
 int main() {
-   
+
     Vector2i player = Vector2i(22, 36);
     playerTex.loadFromFile("smile.png");
     Sprite playerSprite;
     playerSprite.setTexture(playerTex);
     playerSprite.setScale(0.045f, 0.045f);
     playerSprite.setPosition(player.x * 25.f, player.y * 25.f);
-    int Mode = 0; 
-   
+    int Mode = 0;
+
 
     while (window.isOpen()) {
         if (Mode == 0)Map2();
@@ -94,7 +94,7 @@ int main() {
                     else newPosition.y -= 0;
                     break;
                 case sf::Keyboard::S: // Move down
-                    newPosition.y += 1; 
+                    newPosition.y += 1;
                     break;
                 case sf::Keyboard::D: // Move right
                     newPosition.x += 1;
@@ -116,13 +116,13 @@ int main() {
         window.clear(Color(0, 0, 0));
 
         // Puzzle Math map1 easy
-        if((player.x == 20 && player.y == 37) && (Mode == 0)) 
-        {   
+        if ((player.x == 20 && player.y == 37) && (Mode == 0))
+        {
             PuzzleMain();
             player.x = 20;
             player.y = 38;
         }
-       
+
         //ทางเข้าเส้นชัย Map1
         if ((player.x == 20 && player.y == 39) and (Mode == 0))
         {
@@ -132,10 +132,10 @@ int main() {
             if (!font.loadFromFile("ARIAL.ttf")) {
                 return -1;
             }
-            sf::Text text("Waitting..", font, 100);  
-            text.setFillColor(sf::Color::White);  
-            text.setPosition(250, 500);  
-            window.draw(text);  
+            sf::Text text("Waitting..", font, 100);
+            text.setFillColor(sf::Color::White);
+            text.setPosition(250, 500);
+            window.draw(text);
             window.display();
             wait(2);
             window.clear(sf::Color(0, 0, 0));
@@ -158,10 +158,10 @@ void Map1() {
     for (int i = 0; i < 40; i++) {
         for (int j = 0; j < 40; j++) {
             displayRects[i + j * 40].setPosition(i * 25.f, j * 25.f);
-            displayRects[i + j * 40].setSize(sf::Vector2f(25.f, 25.f));    
+            displayRects[i + j * 40].setSize(sf::Vector2f(25.f, 25.f));
             displayRects[i + j * 40].setOutlineColor(sf::Color(0, 0, 0));
 
-           
+
             if ((i == 1 && j == 13) || (i == 1 && j == 17) || (i == 1 && j == 21) || (i == 1 && j == 27) || (i == 1 && j == 31)
                 || (i == 2 && j > 1 && j < 6) || (i == 2 && j > 6 && j < 14) || (i == 2 && j == 15) || (i == 2 && j > 16 && j < 20) || (i == 2 && j > 20 && j < 24) || (i == 2 && j > 24 && j < 28) || (i == 2 && j == 29) || (i == 2 && j == 31) || (i == 2 && j > 32 && j < 36) || (i == 2 && j == 37)
                 || (i == 3 && j == 2) || (i == 3 && j == 7) || (i == 3 && j == 11) || (i == 3 && j == 15) || (i == 3 && j == 19) || (i == 3 && j == 27) || (i == 3 && j == 29) || (i == 3 && j == 31) || (i == 3 && j == 33) || (i == 3 && j == 35) || (i == 3 && j > 36 && j < 39)
@@ -200,7 +200,7 @@ void Map1() {
                 || (i == 36 && j == 4) || (i == 36 && j == 7) || (i == 36 && j == 9) || (i == 36 && j == 15) || (i == 36 && j == 19) || (i == 36 && j == 21) || (i == 36 && j == 29) || (i == 36 && j == 33)
                 || (i == 37 && j == 2) || (i == 37 && j == 4) || (i == 37 && j > 5 && j < 8) || (i == 37 && j == 9) || (i == 37 && j > 10 && j < 20) || (i == 37 && j == 21) || (i == 37 && j > 22 && j < 26) || (i == 37 && j == 27) || (i == 37 && j == 29) || (i == 37 && j == 31) || (i == 37 && j == 33) || (i == 37 && j > 34 && j < 38)
                 || (i == 38 && j == 2) || (i == 38 && j == 23) || (i == 38 && j == 27) || (i == 38 && j == 31) || (i == 38 && j == 35)
-                ) 
+                )
             {
                 gameMap[i + j * 40] = 1;
                 displayRects[i + j * 40].setTexture(&wallTexture1); // กำแพงสีดำ
@@ -214,7 +214,7 @@ void Map1() {
             {
                 displayRects[i + j * 40].setFillColor(Color(0, 0, 0));
             }
-            
+
 
         }
     }
@@ -227,10 +227,10 @@ void Map2() {
         for (int j = 0; j < 40; j++) {
             displayRects[i + j * 40].setPosition(i * 25.f, j * 25.f);
             displayRects[i + j * 40].setSize(sf::Vector2f(25.f, 25.f));
-           
+
             displayRects[i + j * 40].setOutlineColor(sf::Color(0, 0, 0));
 
-            
+
             if ((i == 1 && j == 13) || (i == 1 && j == 17) || (i == 1 && j == 21) || (i == 1 && j == 27) || (i == 1 && j == 31)
                 || (i == 2 && j > 1 && j < 6) || (i == 2 && j > 6 && j < 14) || (i == 2 && j == 15) || (i == 2 && j > 16 && j < 20) || (i == 2 && j > 20 && j < 24) || (i == 2 && j > 24 && j < 28) || (i == 2 && j == 29) || (i == 2 && j == 31) || (i == 2 && j > 32 && j < 36) || (i == 2 && j == 37)
                 || (i == 3 && j == 2) || (i == 3 && j == 7) || (i == 3 && j == 11) || (i == 3 && j == 15) || (i == 3 && j == 19) || (i == 3 && j == 27) || (i == 3 && j == 29) || (i == 3 && j == 31) || (i == 3 && j == 33) || (i == 3 && j == 35) || (i == 3 && j > 36 && j < 39)
@@ -268,26 +268,27 @@ void Map2() {
                 || (i == 35 && j > 0 && j < 3) || (i == 35 && j > 3 && j < 6) || (i == 35 && j == 7) || (i == 35 && j > 8 && j < 14) || (i == 35 && j == 15) || (i == 35 && j == 17) || (i == 35 && j > 18 && j < 32) || (i == 35 && j > 32 && j < 39)
                 || (i == 36 && j == 4) || (i == 36 && j == 7) || (i == 36 && j == 9) || (i == 36 && j == 15) || (i == 36 && j == 19) || (i == 36 && j == 21) || (i == 36 && j == 29) || (i == 36 && j == 33)
                 || (i == 37 && j == 2) || (i == 37 && j == 4) || (i == 37 && j > 5 && j < 8) || (i == 37 && j == 9) || (i == 37 && j > 10 && j < 20) || (i == 37 && j == 21) || (i == 37 && j > 22 && j < 26) || (i == 37 && j == 27) || (i == 37 && j == 29) || (i == 37 && j == 31) || (i == 37 && j == 33) || (i == 37 && j > 34 && j < 38)
-                || (i == 38 && j == 2) || (i == 38 && j == 23) || (i == 38 && j == 27) || (i == 38 && j == 31) || (i == 38 && j == 35)) 
+                || (i == 38 && j == 2) || (i == 38 && j == 23) || (i == 38 && j == 27) || (i == 38 && j == 31) || (i == 38 && j == 35))
             {
                 gameMap[i + j * 40] = 1;
                 displayRects[i + j * 40].setTexture(&wallTexture2); // กำแพงสีดำ
-                
-            }            
+
+            }
             else if ((i == 0 || i == 39 || j == 0 || j == 39) && !(j == 0 && i == 20) && !(j == 39 && i == 20))
             {
                 gameMap[i + j * 40] = 1;
                 displayRects[i + j * 40].setTexture(&wallTexture2); // กำแพงสีดำ
             }
-            else 
+            else
             {
                 displayRects[i + j * 40].setFillColor(Color(0, 0, 0));
-                displayRects[37 * 40 + 20 ].setFillColor(Color::Red);
+                displayRects[37 * 40 + 20].setFillColor(Color::Red);
             }
 
         }
     }
 }
+
 void wait(double seconds) {
     clock_t start_time = clock();
     while ((double)(clock() - start_time) / CLOCKS_PER_SEC < seconds);
@@ -323,17 +324,17 @@ void PuzzleMain() {
     int correctCount = 0;      // ตัวนับคำตอบที่ถูกต้อง
 
     // SECTION: การตั้งค่าและการแสดงข้อความในเกม
-  
+
     sf::Text questionText(currentPuzzle.question, font, 50);
     questionText.setFillColor(Color::Cyan);
-    questionText.setPosition(500-(sizeof(questionText))/2, 300);
+    questionText.setPosition(500 - (sizeof(questionText)) / 2, 300);
 
     sf::Text answerPrompt("", font, 50);
     answerPrompt.setFillColor(sf::Color::Green);
     answerPrompt.setPosition(500 - (sizeof(answerPrompt)) / 2, 400);
 
     sf::Text resultText("", font, 50);
-    resultText.setPosition(500-(sizeof(resultText))/2, 500);
+    resultText.setPosition(500 - (sizeof(resultText)) / 2, 500);
 
     // ตัวแปรที่ใช้ในการป้อนคำตอบ
     std::string userAnswer = "";
@@ -425,7 +426,6 @@ void PuzzleMain() {
         window.display();
 
     }
-   
-}
 
+}
 
