@@ -7,7 +7,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <string>
-
+#include <map>
 
 
 
@@ -20,7 +20,6 @@ void Map3();
 void Map4();
 void wait(double);
 void PuzzleMain();
-void Puzzle_map1(int, int, int);
 
 using namespace sf;
 using namespace std;
@@ -78,6 +77,9 @@ int main() {
     playerSprite.setPosition(player.x * 25.f, player.y * 25.f);
     int Mode = 0;
 
+    bool puzzlesolve = false;   
+    std::map<std::pair<int, int>, bool> puzzleStatus;
+
 
     while (window.isOpen()) {
         if (Mode == 0)Map2();
@@ -91,6 +93,7 @@ int main() {
             }
 
             if (event.type == sf::Event::KeyPressed) {
+                puzzlesolve = false; //ทำให้ puzzle โผล่ที่เดิมอีกครั้ง
                 sf::Vector2i newPosition = player;
                 switch (event.key.code) {
                 case sf::Keyboard::W: // Move up
@@ -120,13 +123,16 @@ int main() {
         window.clear(Color(0, 0, 0));
 
         // Puzzle Math map1 easy
-        if ((player.x == 20 && player.y == 37) && (Mode == 0))
+        if ((player.x == 20 && player.y == 37) && (Mode == 0) && !puzzlesolve)
         {
             PuzzleMain();
-            player.x = 20;
-            player.y = 38;
+            puzzlesolve = true; // ทำให้ puzzle หายไปจากตำแหน่งที่ยืนอยู่
         }
-
+        if ((player.x == 20 && player.y == 2) && (Mode == 1) && !puzzlesolve)
+        {
+            PuzzleMain();
+            puzzlesolve = true;
+        }
         //ทางเข้าเส้นชัย Map1
         if ((player.x == 20 && player.y == 39) and (Mode == 0))
         {
@@ -144,7 +150,41 @@ int main() {
             wait(2);
             window.clear(sf::Color(0, 0, 0));
             Mode = 1;
-        }   //เส้นชัย map1
+        }   //map2
+        if ((player.x == 20 && player.y == 39) and (Mode == 1))
+        {
+            player.x = 20;
+            player.y = 0;
+            window.clear(sf::Color(0, 0, 0));
+            if (!font.loadFromFile("ARIAL.ttf")) {
+                return -1;
+            }
+            sf::Text text("Waitting..", font, 100);
+            text.setFillColor(sf::Color::White);
+            text.setPosition(250, 500);
+            window.draw(text);
+            window.display();
+            wait(2);
+            window.clear(sf::Color(0, 0, 0));
+            Mode = 2;
+        }   // map3
+        if ((player.x == 0 && player.y == 39) and (Mode == 2))
+        {
+            player.x = 20;
+            player.y = 0;
+            window.clear(sf::Color(0, 0, 0));
+            if (!font.loadFromFile("ARIAL.ttf")) {
+                return -1;
+            }
+            sf::Text text("Waitting..", font, 100);
+            text.setFillColor(sf::Color::White);
+            text.setPosition(250, 500);
+            window.draw(text);
+            window.display();
+            wait(2);
+            window.clear(sf::Color(0, 0, 0));
+            Mode = 3;
+        }   //เส้นชัย map4
 
         for (int i = 0; i < 40 * 40; i++) {
             window.draw(displayRects[i]);
@@ -153,6 +193,7 @@ int main() {
         window.draw(playerSprite);
 
         window.display();
+        
     }
     return 0;
 }
@@ -552,6 +593,8 @@ void PuzzleMain() {
         }
         if (isCorrect) {
             Puz = false;
+
+            
         }
 
         // ------------------------------------------
