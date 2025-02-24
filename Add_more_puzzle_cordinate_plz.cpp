@@ -122,10 +122,10 @@ int main() {
         }
         window.clear(Color(0, 0, 0));
 
-        // Puzzle Math map1 easy
-        if ((player.x == 20 && player.y == 37) && (Mode == 0) && !puzzlesolve)
+        // Puzzle Math map1 easy ถ้าจะเติมพิกัดให้เติมใน (( วงเล็บใน ))
+        if (( (player.x == 20 && player.y == 37) || (player.x == 27 && player.y == 38) ) && (Mode == 0) && !puzzlesolve)
         {
-            PuzzleMain();
+           PuzzleMain();
             puzzlesolve = true; // ทำให้ puzzle หายไปจากตำแหน่งที่ยืนอยู่
         }
         if ((player.x == 20 && player.y == 2) && (Mode == 1) && !puzzlesolve)
