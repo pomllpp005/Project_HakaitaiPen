@@ -246,40 +246,7 @@ int main() {
         //map2
         if (Mode == 2) {
 
-            if ((player.x == 29 && player.y == 2) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 9 && player.y == 20) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-
-            }
-            if ((player.x == 20 && player.y == 8) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 16 && player.y == 20) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 20 && player.y == 26) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 22 && player.y == 19) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 10 && player.y == 34) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 38 && player.y == 20) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 20 && player.y == 37) && !puzzlesolve) {
+            if (((player.x == 29 && player.y == 2)|| (player.x == 9 && player.y == 20) || (player.x == 20 && player.y == 8) || (player.x == 16 && player.y == 20) || (player.x == 20 && player.y == 26) || (player.x == 22 && player.y == 19) || (player.x == 10 && player.y == 34) || (player.x == 38 && player.y == 20) || (player.x == 20 && player.y == 37)) && !puzzlesolve) {
                 PuzzleMain();
                 puzzlesolve = true;
             }
@@ -309,67 +276,10 @@ int main() {
         //map3
         if (Mode == 3) {
 
-            if ((player.x == 29 && player.y == 5) && !puzzlesolve) {
+            if (((player.x == 29 && player.y == 5) || (player.x == 28 && player.y == 2) || (player.x == 20 && player.y == 10) || (player.x == 16 && player.y == 22) || (player.x == 16 && player.y == 22) || (player.x == 17 && player.y == 34) || (player.x == 20 && player.y == 37) || (player.x == 9 && player.y == 20) || (player.x == 20 && player.y == 8) || (player.x == 16 && player.y == 20) || (player.x == 20 && player.y == 26) || (player.x == 22 && player.y == 19) || (player.x == 10 && player.y == 34) || (player.x == 38 && player.y == 19) || (player.x == 20 && player.y == 37)) && !puzzlesolve) {
                 PuzzleMain();
                 puzzlesolve = true;
             }
-            if ((player.x == 28 && player.y == 2) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 20 && player.y == 10) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 16 && player.y == 22) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 35 && player.y == 20) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 17 && player.y == 34) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 20 && player.y == 37) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 9 && player.y == 20) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 20 && player.y == 8) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 16 && player.y == 20) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 20 && player.y == 26) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 22 && player.y == 19) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 10 && player.y == 34) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 38 && player.y == 19) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-            if ((player.x == 20 && player.y == 37) && !puzzlesolve) {
-                PuzzleMain();
-                puzzlesolve = true;
-            }
-
 
             if ((player.x == 20 && player.y == 39) and (Mode == 3))
             {
