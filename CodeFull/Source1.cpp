@@ -1,119 +1,141 @@
 //#include <SFML/Graphics.hpp>
 //#include <iostream>
-//#include <cmath>
-//using namespace sf;
-//using namespace std;
+//#include <vector>
+//#include <ctime>
+//#include <cstdlib>
 //
-//void Menu();
+//struct Puzzle {
+//    std::string question;
+//    std::string answer;
+//};
 //
-//int main() {
+//Puzzle getRandomMathPuzzle() {
+//    int a = rand() % 30 + 1;
+//    int b = rand() % 30 + 1;
+//    int operation = rand() % 4;
+//    std::string question;
+//    int answer;
 //
-//    Menu();
-//    return 0;
+//    switch (operation) {
+//    case 0: question = "What is " + std::to_string(a) + " + " + std::to_string(b) + "?"; answer = a + b; break;
+//    case 1: question = "What is " + std::to_string(a) + " - " + std::to_string(b) + "?"; answer = a - b; break;
+//    case 2: question = "What is " + std::to_string(a) + " * " + std::to_string(b) + "?"; answer = a * b; break;
+//    case 3: question = "What is " + std::to_string(a * b) + " / " + std::to_string(b) + "?"; answer = a; break;
+//    }
+//    return { question, std::to_string(answer) };
 //}
 //
-//void Menu() {
-//    RenderWindow window(VideoMode(800, 600), "GAME name");
+//Puzzle getRandomPuzzle(const std::vector<Puzzle>& puzzles) {
+//    int index = rand() % puzzles.size();
+//    return puzzles[index];
+//}
 //
-//    // โหลด Texture
-//    Texture Bg;
-//    if (!Bg.loadFromFile("bgMenu5.jpg")) {
-//        cerr << "Error: Could not load image!" << endl;
-//        return;
+//void drawRoundedTextBox(sf::RenderWindow& window, sf::Text& text, sf::Color boxColor, float padding = 20.f) {
+//    sf::FloatRect textBounds = text.getGlobalBounds();
+//    sf::RectangleShape textBox(sf::Vector2f(textBounds.width + padding * 2, textBounds.height + padding * 2));
+//    textBox.setPosition(textBounds.left - padding, textBounds.top - padding);
+//    textBox.setFillColor(boxColor);
+//    textBox.setOutlineColor(sf::Color::White);
+//    textBox.setOutlineThickness(2);
+//    window.draw(textBox);
+//    window.draw(text);
+//}
+//
+//int main() {
+//    srand(static_cast<unsigned>(time(nullptr)));
+//
+//    sf::RenderWindow window(sf::VideoMode(1000, 1000), "C++ Puzzle Game");
+//
+//    sf::Texture backgroundTexture;
+//    if (!backgroundTexture.loadFromFile("bg.png")) {
+//        std::cerr << "Error loading background image!\n";
+//        return -1;
+//    }
+//    sf::Sprite backgroundSprite;
+//    backgroundSprite.setTexture(backgroundTexture);
+//
+//    sf::Font font;
+//    if (!font.loadFromFile("ARIAL.ttf")) {
+//        std::cerr << "Error loading font (ARIAL.ttf)!\n";
+//        return -1;
 //    }
 //
-//    // smoothing
-//    Bg.setSmooth(true);
+//    std::vector<Puzzle> puzzles = {
+//        getRandomMathPuzzle(),
 //
-//    // สร้าง Sprite และตั้งค่า Texture
-//    Sprite Bgsprite;
-//    Bgsprite.setTexture(Bg);
-//    // คำนวณอัตราส่วนเพื่อปรับขนาดให้เต็มหน้าจอ
-//    Bgsprite.setScale(
-//        static_cast<float>(window.getSize().x) / Bg.getSize().x,
-//        static_cast<float>(window.getSize().y) / Bg.getSize().y     // ขนาดของหน้าต่าง (RenderWindow)
-//    );
+//    {"What is the output?\n\nint sum = 0;\nfor(int i=1; i<=5; i++) {\n    sum += i;\n}\nstd::cout << sum;", "15"},
+//    {"What is the output?\n\nstd::string s = \"Hello\";\nstd::cout << s.size();", "5"},
+//    {"What is the output?\n\nint a = 2;\nint b = 3;\nstd::cout << a + b;", "5" },
+//    { "What is the output?\n\nint x = 10;\nstd::cout << x * 2;", "20" },
+//    { "What is the output?\n\nfor(int i=0; i<3; i++) {\n    std::cout << i;\n}", "012" },
+//    { "What is the output?\n\nint sum = 0;\nfor(int i=1; i<=5; i++) {\n    sum += i;\n}\nstd::cout << sum;", "15" },
+//    { "What is the output?\n\nint a = 5;\nint b = 2;\nstd::cout << a / b;", "2" },
+//    { "What is the output?\n\nint a = 7;\nif(a % 2 == 0) {\n    std::cout << \"Even\";\n} else {\n    std::cout << \"Odd\";\n}", "Odd" },
+//    { "What is the output?\n\nstd::string s = \"Hello\";\nstd::cout << s.size();", "5" },
+//    { "What is the output?\n\nint factorial(int n) {\n    if(n <= 1) return 1;\n    return n * factorial(n - 1);\n}\nstd::cout << factorial(4);", "24" },
+//    { "What is the output?\n\nstd::vector<int> v = {10, 20, 30};\nfor(int x : v) {\n    std::cout << x << \" \";\n}", "10 20 30 " },
+//    { "What is the output?\n\nfor(int i = 1; i <= 3; i++) {\n    for(int j = 1; j <= 2; j++) {\n        std::cout << i + j << \" \";\n    }\n}", "2 3 3 4 4 5 " },
+//    { "What is the output?\n\nstd::string s = \"world\";\ns[0] = 'W';\nstd::cout << s;", "World" },
+//    { "What is the output?\n\nint x = 1;\nwhile(x <= 3) {\n    std::cout << x++;\n}", "123" },
+//    { "What is the output?\n\nint a = 0;\nfor(int i = 0; i < 5; i++) {\n    a += i;\n}\nstd::cout << a;", "10" },
+//    { "What is the output?\n\nstd::vector<int> v = {1, 2, 3, 4};\nv.push_back(5);\nstd::cout << v.size();", "5"}
+//    };
 //
+//    Puzzle currentPuzzle = getRandomPuzzle(puzzles);
 //
-//    //Logo
-//    Texture LogogameTexture;
-//    if (!LogogameTexture.loadFromFile("Logo.png")) {
-//        cerr << "Error: Could not load Logo image!" << endl;
-//        return;
-//    }
-//    LogogameTexture.setSmooth(true);
+//    sf::Text questionText(currentPuzzle.question, font, 24);
+//    questionText.setFillColor(sf::Color::Black);
+//    questionText.setPosition(200, 200);
 //
-//    Sprite Logogamesp;
-//    Logogamesp.setTexture(LogogameTexture);
-//    Logogamesp.setPosition(265, 100); // ตำแหน่ง x,y
-//    //ButtonStsp.setScale(0.7f,0.7f);  // ขนาดปุ่ม
-//    Vector2f normalScaleLg(0.22f, 0.18f);
-//    //Vector2f clickScaleLg(0.15f, 0.11f);
-//    Logogamesp.setScale(normalScaleLg);
+//    sf::Text answerPrompt("", font, 24);
+//    answerPrompt.setFillColor(sf::Color::White);
+//    answerPrompt.setPosition(150, 600);
 //
+//    sf::Text resultText("", font, 32);
+//    resultText.setPosition(150, 700);
 //
-//    //ปุ่ม start
-//    Texture ButtonStTexture;
-//    if (!ButtonStTexture.loadFromFile("Start.png")) {
-//        cerr << "Error: Could not load button image!" << endl;
-//        return;
-//    }
-//    ButtonStTexture.setSmooth(true);
-//
-//    Sprite ButtonStsp;
-//    ButtonStsp.setTexture(ButtonStTexture);
-//    ButtonStsp.setPosition(420, 490); // ตำแหน่ง x,y
-//    //ButtonStsp.setScale(0.7f,0.7f);  // ขนาดปุ่ม
-//    Vector2f normalScaleSt(0.20f, 0.16f);
-//    Vector2f clickScaleSt(0.15f, 0.11f);
-//    ButtonStsp.setScale(normalScaleSt);
-//
-//    bool isPressed = false; // เช็กว่าปุ่มถูกกดอยู่หรือไม่
-//
-//    // ตั้ง Origin ให้อยู่ตรงกลางของปุ่ม
-//    ButtonStsp.setOrigin(ButtonStTexture.getSize().x / 2.0f, ButtonStTexture.getSize().y / 2.0f);
-//
+//    std::string userAnswer = "";
+//    bool isCorrect = false;
 //
 //    while (window.isOpen()) {
 //        sf::Event event;
-//        Vector2i mousePos = Mouse::getPosition(window);
-//        bool isHovering = ButtonStsp.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
-//
-//
 //        while (window.pollEvent(event)) {
-//            if (event.type == sf::Event::Closed)
+//            if (event.type == sf::Event::Closed) {
 //                window.close();
-//
-//            //  ตรวจจับการคลิกปุ่ม start
-//            if (isHovering) {
-//                ButtonStsp.setColor(Color(200, 200, 200)); // เปลี่ยนสีเมื่อ Hover
-//
-//                if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
-//                    ButtonStsp.setScale(clickScaleSt); // ย่อขนาดลง
-//                    isPressed = true;
-//                }
-//
-//                if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left) {
-//                    ButtonStsp.setScale(normalScaleSt); // คืนขนาดเดิม
-//                    isPressed = false;
-//                    cout << "Start clicked!" << endl;
-//                    window.close();  // สามารถเปลี่ยนเป็นโหลดหน้าเกมได้
-//                }
-//            }
-//            else {
-//                ButtonStsp.setColor(Color::White);  // กลับเป็นสีเดิม
 //            }
 //
+//            if (event.type == sf::Event::TextEntered) {
+//                if (event.text.unicode == '\b' && !userAnswer.empty()) {
+//                    userAnswer.pop_back();
+//                }
+//                else if (event.text.unicode == '\r') {
+//                    if (userAnswer == currentPuzzle.answer) {
+//                        resultText.setString("Correct! New puzzle incoming...");
+//                        resultText.setFillColor(sf::Color::Green);
+//                        currentPuzzle = getRandomPuzzle(puzzles);
+//                        questionText.setString(currentPuzzle.question);
+//                    }
+//                    else {
+//                        resultText.setString("Incorrect. Try again!");
+//                        resultText.setFillColor(sf::Color::Red);
+//                    }
+//                    userAnswer = "";
+//                }
+//                else if (event.text.unicode < 128) {
+//                    userAnswer += static_cast<char>(event.text.unicode);
+//                }
+//            }
 //        }
 //
-//        // แสดงผล
-//        window.clear(); // ล้างหน้าจอ
-//        window.draw(Bgsprite);
-//        window.draw(ButtonStsp);
-//        window.draw(Logogamesp);
-//        window.display(); // แสดงผล
+//        answerPrompt.setString("Your answer: " + userAnswer + "_");
+//
+//        window.clear();
+//        window.draw(backgroundSprite);  // วาด background ก่อน
+//        drawRoundedTextBox(window, questionText, sf::Color(0, 0, 0, 0));
+//        drawRoundedTextBox(window, answerPrompt, sf::Color(0, 100, 0, 150));
+//        drawRoundedTextBox(window, resultText, sf::Color(100, 0, 0, 150));
+//        window.display();
 //    }
 //
+//    return 0;
 //}
-//
-//

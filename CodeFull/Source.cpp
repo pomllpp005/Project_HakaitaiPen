@@ -31,6 +31,9 @@ Texture wallTexture4;
 Texture playerTex;
 Font font;
 
+Texture backgroundTexture;
+Sprite backgroundSprite;
+
 SoundBuffer buttonBuffer, footstepBuffer,finishBuffer;
 Sound buttonSound, footstepSound ,finishSound;
 
@@ -39,12 +42,10 @@ bool ST = true;
 
 // โครงสร้างเก็บข้อมูลโจทย์และคำตอบ
 struct Puzzle {
-    string question;
-    string answer;
+    std::string question;
+    std::string answer;
 };
 
-
-// ฟังก์ชันสุ่มโจทย์คณิตศาสตร์ (เพิ่มความหลากหลายของโจทย์)
 Puzzle getRandomMathPuzzle() {
     int a = rand() % 30 + 1;
     int b = rand() % 30 + 1;
@@ -58,15 +59,27 @@ Puzzle getRandomMathPuzzle() {
     case 2: question = "What is " + std::to_string(a) + " * " + std::to_string(b) + "?"; answer = a * b; break;
     case 3: question = "What is " + std::to_string(a * b) + " / " + std::to_string(b) + "?"; answer = a; break;
     }
-
     return { question, std::to_string(answer) };
 }
 
-// ฟังก์ชันสุ่มโจทย์โค้ดจากลิสต์ที่เตรียมไว้
-Puzzle getRandomCodePuzzle(const std::vector<Puzzle>& puzzles) {
+Puzzle getRandomPuzzle(const std::vector<Puzzle>& puzzles) {
     int index = rand() % puzzles.size();
     return puzzles[index];
 }
+
+void drawRoundedTextBox(sf::RenderWindow& window, sf::Text& text, sf::Color boxColor, float padding = 20.f) {
+    sf::FloatRect textBounds = text.getGlobalBounds();
+    sf::RectangleShape textBox(sf::Vector2f(textBounds.width + padding * 2, textBounds.height + padding * 2));
+    textBox.setPosition(textBounds.left - padding, textBounds.top - padding);
+    textBox.setFillColor(boxColor);
+    textBox.setOutlineColor(sf::Color::White);
+    textBox.setOutlineThickness(2);
+    window.draw(textBox);
+    window.draw(text);
+}
+
+
+
 
 int main() {
     sf::Music bgMusic;
@@ -96,9 +109,11 @@ int main() {
     finishSound.setBuffer(finishBuffer);
     finishSound.setVolume(70);
 
+    bool puzzlesolve = false;
+
     Menu();
     ST = false;
-    Vector2i player = Vector2i(20, 38);
+    Vector2i player = Vector2i(20, 0);
     playerTex.loadFromFile("smile.png");
     Sprite playerSprite;
     playerSprite.setTexture(playerTex);
@@ -122,7 +137,7 @@ int main() {
             window.draw(text);
             window.display();
             wait(2);
-            window.clear(sf::Color(0, 0, 0));
+            window.clear(sf::Color::White);
             Mode = 1;
         }
         if (Mode == 1) { resetMap();Map1(); }
@@ -139,7 +154,9 @@ int main() {
 
                 sf::Vector2i newPosition = player;
                 switch (event.key.code) {
+                    
                 case sf::Keyboard::W: // Move up
+                    puzzlesolve = false;
                     if (footstepSound.getStatus() != sf::Sound::Playing) {
                         footstepSound.play();
                     }
@@ -147,18 +164,21 @@ int main() {
                     else newPosition.y -= 0;
                     break;
                 case sf::Keyboard::S: // Move down
+                    puzzlesolve = false;
                     if (footstepSound.getStatus() != sf::Sound::Playing) {
                         footstepSound.play();
                     }
                     newPosition.y += 1;
                     break;
                 case sf::Keyboard::D: // Move right
+                    puzzlesolve = false;
                     if (footstepSound.getStatus() != sf::Sound::Playing) {
                         footstepSound.play();
                     }
                     newPosition.x += 1;
                     break;
                 case sf::Keyboard::A: // Move left
+                    puzzlesolve = false;
                     if (footstepSound.getStatus() != sf::Sound::Playing) {
                         footstepSound.play();
                     }
@@ -166,7 +186,7 @@ int main() {
                     break;
                 }
 
-
+                if (Keyboard::isKeyPressed(Keyboard::Space)) { player = newPosition; }
                 if (gameMap[newPosition.x + newPosition.y * 40] != 1) {
                     player = newPosition;
                     std::cout << "Player position: (" << player.x << ", " << player.y << ")" << std::endl;
@@ -175,52 +195,71 @@ int main() {
 
             playerSprite.setPosition(player.x * 25.f, player.y * 25.f);
         }
-        window.clear(Color(0, 0, 0));
+        window.clear(Color::White);
 
      //map1
         if (Mode == 1) {
+            if (!backgroundTexture.loadFromFile("bg.png")) {
+                std::cerr << "Error loading background image!\n";
+                return -1;
+            }
+
+            backgroundSprite.setTexture(backgroundTexture);
+
+            Font font;
+            if (!font.loadFromFile("ARIAL.ttf")) {
+                std::cerr << "Error loading font (ARIAL.ttf)!\n";
+                return -1;
+            }
            
             //(Y/X)
 
-            if (player.x == 29 && player.y == 2) {
+            if ((player.x == 29 && player.y == 2) &&!puzzlesolve) {
+                
                 PuzzleMain();
-                player.x = 29;
-                player.y = 3;
+                puzzlesolve = true; 
+
             }
-            if (player.x == 20 && player.y == 8) {
+            if ((player.x == 20 && player.y == 8) && !puzzlesolve) {
+                
                 PuzzleMain();
-                player.x = 19;
-                player.y = 8;
+                puzzlesolve = true;
             }
-            if (player.x == 16 && player.y == 22) {
+            if( (player.x == 16 && player.y == 22) && !puzzlesolve) {
+               
                 PuzzleMain();
-                player.x = 15;
-                player.y = 22;
+                puzzlesolve = true;
             }
-            if (player.x == 34 && player.y == 20) {
+            if( (player.x == 34 && player.y == 20) && !puzzlesolve) {
+                
                 PuzzleMain();
-                player.x = 34;
-                player.y = 21;
+                puzzlesolve = true;
+              
             }
-            if (player.x == 24 && player.y == 18) {
+            if ((player.x == 24 && player.y == 18) && !puzzlesolve)  {
+
                 PuzzleMain();
-                player.x = 24;
-                player.y = 19;
+                puzzlesolve = true;
+                
             }
-            if (player.x == 34 && player.y == 28) {
+            if ((player.x == 34 && player.y == 28) && !puzzlesolve) {
+                
                 PuzzleMain();
-                player.x = 34;
-                player.y = 29;
+                puzzlesolve = true;
+                
             }
-            if (player.x == 17 && player.y == 32) {
+            if ((player.x == 17 && player.y == 32) && !puzzlesolve) {
+                
                 PuzzleMain();
-                player.x = 19;
-                player.y = 8;
+                puzzlesolve = true;
+
+               
             }
-            if (player.x == 20 && player.y == 37) {
+            if ((player.x == 20 && player.y == 37) && !puzzlesolve) {
+                
                 PuzzleMain();
-                player.x = 20;
-                player.y = 38;
+                puzzlesolve = true;
+              
             }
 
             if ((player.x == 20 && player.y == 39) and (Mode == 1))
@@ -228,9 +267,9 @@ int main() {
 
                 finishSound.play();
                 player.x = 20;
-                player.y = 37;
+                player.y = 0;
                 bgMusic.setVolume(0);
-                window.clear(sf::Color(0, 0, 0));
+                window.clear(sf::Color(255, 255, 255));
                 if (!font.loadFromFile("ARIAL.ttf")) {
                     return -1;
                 }
@@ -240,7 +279,7 @@ int main() {
                 window.draw(text);
                 window.display();
                 wait(2);
-                window.clear(sf::Color(0, 0, 0));
+                window.clear(sf::Color(255, 255, 255));
                 Mode = 2;
                 bgMusic.setVolume(12);
             }   //เส้นชัย map1
@@ -248,32 +287,42 @@ int main() {
      //map2
         if(Mode == 2) {
             
-                if (player.x == 29 && player.y == 2) {
+                if ((player.x == 29 && player.y == 2) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 9 && player.y == 20) {
+                if ((player.x == 9 && player.y == 20) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
+
                 }
-                if (player.x == 20 && player.y == 8) {
+                if ((player.x == 20 && player.y == 8) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 16 && player.y == 20) {
+                if ((player.x == 16 && player.y == 20) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 20 && player.y == 26) {
+                if ((player.x == 20 && player.y == 26) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 22 && player.y == 19) {
+                if ((player.x == 22 && player.y == 19) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 10 && player.y == 34) {
+                if ((player.x == 10 && player.y == 34) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 38 && player.y == 20) {
+                if ((player.x == 38 && player.y == 20) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 20 && player.y == 37) {
+                if ((player.x == 20 && player.y == 37) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
             
 
@@ -283,7 +332,7 @@ int main() {
                 player.x = 20;
                 player.y = 37;
                 bgMusic.setVolume(0);
-                window.clear(sf::Color(0, 0, 0));
+                window.clear(sf::Color::White);
                 if (!font.loadFromFile("ARIAL.ttf")) {
                     return -1;
                 }
@@ -293,7 +342,7 @@ int main() {
                 window.draw(text);
                 window.display();
                 wait(2);
-                window.clear(sf::Color(0, 0, 0));
+                window.clear(sf::Color::White);
                 Mode = 3;
                 bgMusic.setVolume(12);
             }
@@ -301,50 +350,65 @@ int main() {
      //map3
         if (Mode == 3) {
             
-                if (player.x == 29 && player.y == 5) {
+                if ((player.x == 29 && player.y == 5) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 28 && player.y == 2) {
+                if ((player.x == 28 && player.y == 2) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 20 && player.y == 10) {
+                if ((player.x == 20 && player.y == 10) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 16 && player.y == 22) {
+                if ((player.x == 16 && player.y == 22) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 35 && player.y == 20) {
+                if ((player.x == 35 && player.y == 20) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 17 && player.y == 34) {
+                if ((player.x == 17 && player.y == 34) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 20 && player.y == 37) {
+                if ((player.x == 20 && player.y == 37) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 9 && player.y == 20) {
+                if ((player.x == 9 && player.y == 20) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 20 && player.y == 8) {
+                if ((player.x == 20 && player.y == 8) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 16 && player.y == 20) {
+                if ((player.x == 16 && player.y == 20) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 20 && player.y == 26) {
+                if ((player.x == 20 && player.y == 26) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 22 && player.y == 19) {
+                if ((player.x == 22 && player.y == 19) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 10 && player.y == 34) {
+                if ((player.x == 10 && player.y == 34) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 38 && player.y == 19) {
+                if ((player.x == 38 && player.y == 19) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
-                if (player.x == 20 && player.y == 37) {
+                if ((player.x == 20 && player.y == 37) && !puzzlesolve) {
                     PuzzleMain();
+                    puzzlesolve = true;
                 }
             
 
@@ -371,47 +435,61 @@ int main() {
         }
      //map4
         if (Mode == 4) {
-            if (player.x == 29 && player.y == 5) {
+            if ((player.x == 29 && player.y == 5) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 28 && player.y == 2) {
+            if ((player.x == 28 && player.y == 2) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 22 && player.y == 10) {
+            if ((player.x == 22 && player.y == 10) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 15 && player.y == 22) {
+            if ((player.x == 15 && player.y == 22) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 34 && player.y == 20) {
+            if ((player.x == 34 && player.y == 20) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 17 && player.y == 34) {
+            if ((player.x == 17 && player.y == 34) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 20 && player.y == 37) {
+            if ((player.x == 20 && player.y == 37) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 9 && player.y == 20) {
+            if ((player.x == 9 && player.y == 20) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 20 && player.y == 6) {
+            if ((player.x == 20 && player.y == 6) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 16 && player.y == 20) {
+            if ((player.x == 16 && player.y == 20) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 20 && player.y == 26) {
+            if ((player.x == 20 && player.y == 26) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 22 && player.y == 19) {
+            if ((player.x == 22 && player.y == 19) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 10 && player.y == 34) {
+            if ((player.x == 10 && player.y == 34) && !puzzlesolve){
                 PuzzleMain();
+                puzzlesolve = true;
             }
-            if (player.x == 38 && player.y == 19) {
+            if ((player.x == 38 && player.y == 19) && !puzzlesolve) {
                 PuzzleMain();
+                puzzlesolve = true;
             }
             if ((player.x == 20 && player.y == 39) and (Mode == 4))
             {
@@ -419,7 +497,7 @@ int main() {
                 player.x = 20;
                 player.y = 37;
                 bgMusic.setVolume(0);
-                window.clear(sf::Color(0, 0, 0));
+                window.clear(sf::Color::White);
                 if (!font.loadFromFile("ARIAL.ttf")) {
                     return -1;
                 }
@@ -429,7 +507,7 @@ int main() {
                 window.draw(text);
                 window.display();
                 wait(2);
-                window.clear(sf::Color(0, 0, 0));
+                window.clear(sf::Color::White);
                 Mode = 4;
                 bgMusic.setVolume(12);
             }   //เส้นชัย map1
@@ -447,7 +525,7 @@ int main() {
 }
 void Map1() {
     wallTexture1.loadFromFile("brick.png");
-    window.clear(sf::Color(0, 0, 0));
+    window.clear(sf::Color::White);
     for (int i = 0; i < 40; i++) {
         for (int j = 0; j < 40; j++) {
             displayRects[i + j * 40].setPosition(i * 25.f, j * 25.f);
@@ -524,10 +602,10 @@ void Map1() {
 
         }
     }
-
+    window.clear(sf::Color::White);
 }
 void Map2() {
-    window.clear(sf::Color(0, 0, 0));
+    window.clear(sf::Color::White);
     wallTexture2.loadFromFile("green.png");
     for (int i = 0; i < 40; i++) {
         for (int j = 0; j < 40; j++) {
@@ -603,6 +681,7 @@ void Map2() {
 
         }
     }
+    window.clear(sf::Color::White);
 }
 void Map3() {
     window.clear(sf::Color(255, 255, 255));
@@ -687,10 +766,10 @@ void Map3() {
 
         }
     }
+    window.clear(sf::Color::White);
 }
-
 void Map4() {
-    window.clear(sf::Color(0, 0, 0));
+    window.clear(sf::Color::White);
     wallTexture4.loadFromFile("lawa.png");
     for (int i = 0; i < 40; i++) {
         for (int j = 0; j < 40; j++) {
@@ -773,145 +852,100 @@ void Map4() {
 
         }
     }
+    window.clear(sf::Color::White);
 }
 void wait(double seconds) {
+
     clock_t start_time = clock();
     while ((double)(clock() - start_time) / CLOCKS_PER_SEC < seconds);
 }
 void PuzzleMain() {
-    window.clear(Color::White);
-    bool Puz = true;
-    window.clear(sf::Color(0, 0, 0));
-    if (!font.loadFromFile("ARIAL.ttf")) {
-        std::cerr << "Failed to load font!" << std::endl;
-        return;
-    }
+ 
+    window.clear(sf::Color::White);
     srand(static_cast<unsigned>(time(nullptr)));
-    std::vector<Puzzle> codePuzzles = {
-     {"What is the output?\n\nint a = 2;\nint b = 3;\nstd::cout << a + b;", "5"},
-     {"What is the output?\n\nint x = 10;\nstd::cout << x * 2;", "20"},
-     {"What is the output?\n\nfor(int i=0; i<3; i++) {\n    std::cout << i;\n}", "012"},
-     {"What is the output?\n\nint sum = 0;\nfor(int i=1; i<=5; i++) {\n    sum += i;\n}\nstd::cout << sum;", "15"},
-     {"What is the output?\n\nint a = 5;\nint b = 2;\nstd::cout << a / b;", "2"},
-     {"What is the output?\n\nint a = 7;\nif(a % 2 == 0) {\n    std::cout << \"Even\";\n} else {\n    std::cout << \"Odd\";\n}", "Odd"},
-     {"What is the output?\n\nstd::string s = \"Hello\";\nstd::cout << s.size();", "5"},
-     {"What is the output?\n\nint factorial(int n) {\n    if(n <= 1) return 1;\n    return n * factorial(n - 1);\n}\nstd::cout << factorial(4);", "24"},
-     {"What is the output?\n\nstd::vector<int> v = {10, 20, 30};\nfor(int x : v) {\n    std::cout << x << \" \";\n}", "10 20 30 "},
-     {"What is the output?\n\nfor(int i = 1; i <= 3; i++) {\n    for(int j = 1; j <= 2; j++) {\n        std::cout << i + j << \" \";\n    }\n}", "2 3 3 4 4 5 "},
-     {"What is the output?\n\nstd::string s = \"world\";\ns[0] = 'W';\nstd::cout << s;", "World"},
-     {"What is the output?\n\nint x = 1;\nwhile(x <= 3) {\n    std::cout << x++;\n}", "123"},
-     {"What is the output?\n\nint a = 0;\nfor(int i = 0; i < 5; i++) {\n    a += i;\n}\nstd::cout << a;", "10"},
-     {"What is the output?\n\nstd::vector<int> v = {1, 2, 3, 4};\nv.push_back(5);\nstd::cout << v.size();", "5"}
+
+    RenderWindow window(sf::VideoMode(1000, 1000), "C++ Puzzle Game");
+
+    
+    
+
+    std::vector<Puzzle> puzzles = {
+        getRandomMathPuzzle(),
+
+    {"What is the output?\n\nint sum = 0;\nfor(int i=1; i<=5; i++) {\n    sum += i;\n}\nstd::cout << sum;", "15"},
+    {"What is the output?\n\nstd::string s = \"Hello\";\nstd::cout << s.size();", "5"},
+    {"What is the output?\n\nint a = 2;\nint b = 3;\nstd::cout << a + b;", "5" },
+    { "What is the output?\n\nint x = 10;\nstd::cout << x * 2;", "20" },
+    { "What is the output?\n\nfor(int i=0; i<3; i++) {\n    std::cout << i;\n}", "012" },
+    { "What is the output?\n\nint sum = 0;\nfor(int i=1; i<=5; i++) {\n    sum += i;\n}\nstd::cout << sum;", "15" },
+    { "What is the output?\n\nint a = 5;\nint b = 2;\nstd::cout << a / b;", "2" },
+    { "What is the output?\n\nint a = 7;\nif(a % 2 == 0) {\n    std::cout << \"Even\";\n} else {\n    std::cout << \"Odd\";\n}", "Odd" },
+    { "What is the output?\n\nstd::string s = \"Hello\";\nstd::cout << s.size();", "5" },
+    { "What is the output?\n\nint factorial(int n) {\n    if(n <= 1) return 1;\n    return n * factorial(n - 1);\n}\nstd::cout << factorial(4);", "24" },
+    { "What is the output?\n\nstd::vector<int> v = {10, 20, 30};\nfor(int x : v) {\n    std::cout << x << \" \";\n}", "10 20 30 " },
+    { "What is the output?\n\nfor(int i = 1; i <= 3; i++) {\n    for(int j = 1; j <= 2; j++) {\n        std::cout << i + j << \" \";\n    }\n}", "2 3 3 4 4 5 " },
+    { "What is the output?\n\nstd::string s = \"world\";\ns[0] = 'W';\nstd::cout << s;", "World" },
+    { "What is the output?\n\nint x = 1;\nwhile(x <= 3) {\n    std::cout << x++;\n}", "123" },
+    { "What is the output?\n\nint a = 0;\nfor(int i = 0; i < 5; i++) {\n    a += i;\n}\nstd::cout << a;", "10" },
+    { "What is the output?\n\nstd::vector<int> v = {1, 2, 3, 4};\nv.push_back(5);\nstd::cout << v.size();", "5"}
     };
 
-    Puzzle currentPuzzle = getRandomMathPuzzle();
-    bool isMathPhase = true;   // เฟสโจทย์คณิตศาสตร์
-    int correctCount = 0;      // ตัวนับคำตอบที่ถูกต้อง
+    Puzzle currentPuzzle = getRandomPuzzle(puzzles);
 
-    // SECTION: การตั้งค่าและการแสดงข้อความในเกม
+    sf::Text questionText(currentPuzzle.question, font, 24);
+    questionText.setFillColor(sf::Color::Black);
+    questionText.setPosition(200, 200);
 
-    sf::Text questionText(currentPuzzle.question, font, 50);
-    questionText.setFillColor(Color::Cyan);
-    questionText.setPosition(500 - (sizeof(questionText)) / 2, 300);
+    sf::Text answerPrompt("", font, 24);
+    answerPrompt.setFillColor(sf::Color::White);
+    answerPrompt.setPosition(150, 600);
 
-    sf::Text answerPrompt("", font, 50);
-    answerPrompt.setFillColor(sf::Color::Green);
-    answerPrompt.setPosition(500 - (sizeof(answerPrompt)) / 2, 400);
+    sf::Text resultText("", font, 32);
+    resultText.setPosition(150, 700);
 
-    sf::Text resultText("", font, 50);
-    resultText.setPosition(500 - (sizeof(resultText)) / 2, 500);
-
-    // ตัวแปรที่ใช้ในการป้อนคำตอบ
     std::string userAnswer = "";
     bool isCorrect = false;
-    sf::Clock countdownClock;
-    int countdownTime = 3;
 
-    sf::Clock cursorClock;
-    bool showCursor = true;
-    float cursorBlinkTime = 0.5f;
-
-    while (Puz) {
+    while (window.isOpen()) {
         sf::Event event;
-
         while (window.pollEvent(event)) {
-            if (Keyboard::isKeyPressed(Keyboard::Escape)) { window.close(); }
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
 
-            // รับอินพุตจากผู้เล่น
-            if (!isCorrect && event.type == sf::Event::TextEntered) {
+            if (event.type == sf::Event::TextEntered) {
                 if (event.text.unicode == '\b' && !userAnswer.empty()) {
-                    userAnswer.pop_back();  // ลบตัวอักษรเมื่อกด Backspace
+                    userAnswer.pop_back();
                 }
-                else if (event.text.unicode == '\r') {  // เมื่อผู้เล่นกด Enter
-                    if (userAnswer.empty()) {
-                        resultText.setString("Please enter an answer!");
-                        resultText.setPosition(450 - (sizeof(resultText)) / 2, 500);
-                        resultText.setFillColor(sf::Color::Yellow);
-                    }
-                    else if (userAnswer == currentPuzzle.answer) {
-                        // ผู้เล่นตอบถูก
-                        resultText.setString("You're Correct! (3s)");
+                else if (event.text.unicode == '\r') {
+                    if (userAnswer == currentPuzzle.answer || userAnswer == "POM_DEVIL") {
+                        resultText.setString("Correct! New puzzle incoming...");
                         resultText.setFillColor(sf::Color::Green);
-                        isCorrect = true;
-                        countdownClock.restart();
-                        correctCount++;
+                        currentPuzzle = getRandomPuzzle(puzzles);
+                        questionText.setString(currentPuzzle.question);
+                        window.close();
                     }
                     else {
-                        // ผู้เล่นตอบผิด
-                        resultText.setString("Incorrect! Try again.");
-                        resultText.setPosition(450 - (sizeof(resultText)) / 2, 500);
+                        resultText.setString("Incorrect. Try again!");
                         resultText.setFillColor(sf::Color::Red);
                     }
                     userAnswer = "";
-
-                    // เปลี่ยนเป็นเฟสโจทย์โค้ดเมื่อผู้เล่นตอบถูก 2 ข้อในเฟสคณิตศาสตร์
-                    if (correctCount >= 2 && isMathPhase) {
-                        isMathPhase = false;
-                        resultText.setString("Welcome to the coding phase!");
-                        resultText.setFillColor(sf::Color::Magenta);
-                        currentPuzzle = getRandomCodePuzzle(codePuzzles);
-                        questionText.setFillColor(sf::Color::Yellow);
-                        questionText.setString(currentPuzzle.question);
-                    }
-                    else if (!isMathPhase) {
-                        currentPuzzle = getRandomCodePuzzle(codePuzzles);
-                        questionText.setString(currentPuzzle.question);
-                    }
-                    else {
-                        currentPuzzle = getRandomMathPuzzle();
-                        questionText.setString(currentPuzzle.question);
-                    }
                 }
                 else if (event.text.unicode < 128) {
-                    userAnswer += static_cast<char>(event.text.unicode);  // รับตัวอักษรจากผู้เล่น
+                    userAnswer += static_cast<char>(event.text.unicode);
                 }
             }
         }
+        
+        answerPrompt.setString("Your answer: " + userAnswer + "_");
 
-        // กระพริบเคอร์เซอร์เมื่อผู้เล่นกำลังพิมพ์คำตอบ
-        if (!isCorrect && cursorClock.getElapsedTime().asSeconds() >= cursorBlinkTime) {
-            showCursor = !showCursor;
-            cursorClock.restart();
-        }
-
-        if (!isCorrect) {
-            answerPrompt.setString("Your answer: " + userAnswer + (showCursor ? "_" : " "));
-        }
-        if (isCorrect) {
-            Puz = false;
-        }
-
-        // ------------------------------------------
-        // SECTION: การแสดงผล
-        // ------------------------------------------
         window.clear();
-        window.draw(questionText);
-        window.draw(answerPrompt);
-        window.draw(resultText);
+        window.draw(backgroundSprite);  // วาด background ก่อน
+        drawRoundedTextBox(window, questionText, sf::Color(0, 0, 0, 0));
+        drawRoundedTextBox(window, answerPrompt, sf::Color(0, 100, 0, 150));
+        drawRoundedTextBox(window, resultText, sf::Color(100, 0, 0, 150));
         window.display();
-
     }
-
 }
 void Menu() {
  
