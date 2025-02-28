@@ -330,7 +330,7 @@ int main() {
             {
                 finishSound.play();
                 player.x = 20;
-                player.y = 37;
+                player.y = 0;
                 bgMusic.setVolume(0);
                 window.clear(sf::Color::White);
                 if (!font.loadFromFile("ARIAL.ttf")) {
@@ -416,7 +416,7 @@ int main() {
             {
                 finishSound.play();
                 player.x = 20;
-                player.y = 37;
+                player.y = 0;
                 bgMusic.setVolume(0);
                 window.clear(sf::Color(0, 0, 0));
                 if (!font.loadFromFile("ARIAL.ttf")) {
@@ -495,7 +495,7 @@ int main() {
             {
                 finishSound.play();
                 player.x = 20;
-                player.y = 37;
+                player.y = 0;
                 bgMusic.setVolume(0);
                 window.clear(sf::Color::White);
                 if (!font.loadFromFile("ARIAL.ttf")) {
