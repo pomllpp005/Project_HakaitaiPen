@@ -180,8 +180,52 @@ int main() {
      //map1
         if (Mode == 1) {
            
+            //(Y/X)
+
+            if (player.x == 29 && player.y == 2) {
+                PuzzleMain();
+                player.x = 29;
+                player.y = 3;
+            }
+            if (player.x == 20 && player.y == 8) {
+                PuzzleMain();
+                player.x = 19;
+                player.y = 8;
+            }
+            if (player.x == 16 && player.y == 22) {
+                PuzzleMain();
+                player.x = 15;
+                player.y = 22;
+            }
+            if (player.x == 34 && player.y == 20) {
+                PuzzleMain();
+                player.x = 34;
+                player.y = 21;
+            }
+            if (player.x == 24 && player.y == 18) {
+                PuzzleMain();
+                player.x = 24;
+                player.y = 19;
+            }
+            if (player.x == 34 && player.y == 28) {
+                PuzzleMain();
+                player.x = 34;
+                player.y = 29;
+            }
+            if (player.x == 17 && player.y == 32) {
+                PuzzleMain();
+                player.x = 19;
+                player.y = 8;
+            }
+            if (player.x == 20 && player.y == 37) {
+                PuzzleMain();
+                player.x = 20;
+                player.y = 38;
+            }
+
             if ((player.x == 20 && player.y == 39) and (Mode == 1))
             {
+
                 finishSound.play();
                 player.x = 20;
                 player.y = 37;
@@ -203,6 +247,36 @@ int main() {
         }
      //map2
         if(Mode == 2) {
+            
+                if (player.x == 29 && player.y == 2) {
+                    PuzzleMain();
+                }
+                if (player.x == 9 && player.y == 20) {
+                    PuzzleMain();
+                }
+                if (player.x == 20 && player.y == 8) {
+                    PuzzleMain();
+                }
+                if (player.x == 16 && player.y == 20) {
+                    PuzzleMain();
+                }
+                if (player.x == 20 && player.y == 26) {
+                    PuzzleMain();
+                }
+                if (player.x == 22 && player.y == 19) {
+                    PuzzleMain();
+                }
+                if (player.x == 10 && player.y == 34) {
+                    PuzzleMain();
+                }
+                if (player.x == 38 && player.y == 20) {
+                    PuzzleMain();
+                }
+                if (player.x == 20 && player.y == 37) {
+                    PuzzleMain();
+                }
+            
+
             if ((player.x == 20 && player.y == 39) and (Mode == 2))
             {
                 finishSound.play();
@@ -226,6 +300,54 @@ int main() {
         }
      //map3
         if (Mode == 3) {
+            
+                if (player.x == 29 && player.y == 5) {
+                    PuzzleMain();
+                }
+                if (player.x == 28 && player.y == 2) {
+                    PuzzleMain();
+                }
+                if (player.x == 20 && player.y == 10) {
+                    PuzzleMain();
+                }
+                if (player.x == 16 && player.y == 22) {
+                    PuzzleMain();
+                }
+                if (player.x == 35 && player.y == 20) {
+                    PuzzleMain();
+                }
+                if (player.x == 17 && player.y == 34) {
+                    PuzzleMain();
+                }
+                if (player.x == 20 && player.y == 37) {
+                    PuzzleMain();
+                }
+                if (player.x == 9 && player.y == 20) {
+                    PuzzleMain();
+                }
+                if (player.x == 20 && player.y == 8) {
+                    PuzzleMain();
+                }
+                if (player.x == 16 && player.y == 20) {
+                    PuzzleMain();
+                }
+                if (player.x == 20 && player.y == 26) {
+                    PuzzleMain();
+                }
+                if (player.x == 22 && player.y == 19) {
+                    PuzzleMain();
+                }
+                if (player.x == 10 && player.y == 34) {
+                    PuzzleMain();
+                }
+                if (player.x == 38 && player.y == 19) {
+                    PuzzleMain();
+                }
+                if (player.x == 20 && player.y == 37) {
+                    PuzzleMain();
+                }
+            
+
             if ((player.x == 20 && player.y == 39) and (Mode == 3))
             {
                 finishSound.play();
@@ -249,6 +371,48 @@ int main() {
         }
      //map4
         if (Mode == 4) {
+            if (player.x == 29 && player.y == 5) {
+                PuzzleMain();
+            }
+            if (player.x == 28 && player.y == 2) {
+                PuzzleMain();
+            }
+            if (player.x == 22 && player.y == 10) {
+                PuzzleMain();
+            }
+            if (player.x == 15 && player.y == 22) {
+                PuzzleMain();
+            }
+            if (player.x == 34 && player.y == 20) {
+                PuzzleMain();
+            }
+            if (player.x == 17 && player.y == 34) {
+                PuzzleMain();
+            }
+            if (player.x == 20 && player.y == 37) {
+                PuzzleMain();
+            }
+            if (player.x == 9 && player.y == 20) {
+                PuzzleMain();
+            }
+            if (player.x == 20 && player.y == 6) {
+                PuzzleMain();
+            }
+            if (player.x == 16 && player.y == 20) {
+                PuzzleMain();
+            }
+            if (player.x == 20 && player.y == 26) {
+                PuzzleMain();
+            }
+            if (player.x == 22 && player.y == 19) {
+                PuzzleMain();
+            }
+            if (player.x == 10 && player.y == 34) {
+                PuzzleMain();
+            }
+            if (player.x == 38 && player.y == 19) {
+                PuzzleMain();
+            }
             if ((player.x == 20 && player.y == 39) and (Mode == 4))
             {
                 finishSound.play();
@@ -288,6 +452,7 @@ void Map1() {
         for (int j = 0; j < 40; j++) {
             displayRects[i + j * 40].setPosition(i * 25.f, j * 25.f);
             displayRects[i + j * 40].setSize(sf::Vector2f(25.f, 25.f));
+            displayRects[i + j * 40].setOutlineThickness(1.f);
             displayRects[i + j * 40].setOutlineColor(sf::Color::Black);
 
 
@@ -342,6 +507,15 @@ void Map1() {
             else
             {
                 displayRects[i + j * 40].setFillColor(Color::Black);
+                displayRects[2 * 40 + 29].setFillColor(Color(25,51,0));
+                displayRects[8 * 40 + 20].setFillColor(Color(255,51,51));
+                displayRects[22 * 40 + 16].setFillColor(Color(153, 0, 76));
+                displayRects[20 * 40 + 34].setFillColor(Color(51, 255, 51));
+                displayRects[18 * 40 + 24].setFillColor(Color(102, 0, 102));
+                displayRects[28 * 40 + 34].setFillColor(Color(0, 102, 102));
+                displayRects[34 * 40 + 17].setFillColor(Color(127, 0, 255));
+                displayRects[37 * 40 + 20].setFillColor(Color(153, 0, 0));
+
                
             }
             
@@ -359,8 +533,8 @@ void Map2() {
         for (int j = 0; j < 40; j++) {
             displayRects[i + j * 40].setPosition(i * 25.f, j * 25.f);
             displayRects[i + j * 40].setSize(sf::Vector2f(25.f, 25.f));
-
-            displayRects[i + j * 40].setOutlineColor(sf::Color(255, 255, 255));
+            displayRects[i + j * 40].setOutlineThickness(1.f);
+            displayRects[i + j * 40].setOutlineColor(sf::Color(0, 0, 0));
 
 
             if ((i == 1 && j == 13) || (i == 1 && j == 17) || (i == 1 && j == 21) || (i == 1 && j == 27) || (i == 1 && j == 31)
@@ -414,7 +588,17 @@ void Map2() {
             else
             {
                 displayRects[i + j * 40].setFillColor(Color::Black);
-                displayRects[37 * 40 + 20].setFillColor(Color::Red);
+
+                             //(Y,X)
+                displayRects[2 * 40 + 29].setFillColor(Color::Red);
+                displayRects[20 * 40 + 9].setFillColor(Color(51, 0, 102));
+                displayRects[8 * 40 + 20].setFillColor(Color(51,0,102));
+                displayRects[20 * 40 + 16].setFillColor(Color(153, 0, 102));
+                displayRects[26 * 40 + 20].setFillColor(Color(204, 204, 0));
+                displayRects[19 * 40 + 22].setFillColor(Color(51, 0, 102));
+                displayRects[34 * 40 + 10].setFillColor(Color(204, 204, 0));
+                displayRects[20 * 40 + 38].setFillColor(Color(0, 153, 76));
+                displayRects[37 * 40 + 20].setFillColor(Color(153, 0, 0));
             }
 
         }
@@ -427,7 +611,7 @@ void Map3() {
         for (int j = 0; j < 40; j++) {
             displayRects[i + j * 40].setPosition(i * 25.f, j * 25.f);
             displayRects[i + j * 40].setSize(sf::Vector2f(25.f, 25.f));
-          
+            displayRects[i + j * 40].setOutlineThickness(1.f);
             displayRects[i + j * 40].setOutlineColor(sf::Color(255,255, 255));
 
             
@@ -481,6 +665,22 @@ void Map3() {
             else
             {
                 displayRects[i + j * 40].setFillColor(Color::White);
+                //(Y,X)
+                displayRects[5 * 40 + 29].setFillColor(Color::Red);
+                displayRects[2 * 40 + 28].setFillColor(Color(0, 153,153));
+                displayRects[10 * 40 + 20].setFillColor(Color(255, 51, 51));
+                displayRects[22 * 40 + 16].setFillColor(Color(153, 0, 76));
+                displayRects[20 * 40 + 35].setFillColor(Color(51, 255, 51));
+                displayRects[34 * 40 + 17].setFillColor(Color(127, 0, 255));
+                displayRects[37 * 40 + 20].setFillColor(Color(153, 0, 0));
+                displayRects[20 * 40 + 9].setFillColor(Color(51, 0, 102));
+                displayRects[8 * 40 + 20].setFillColor(Color(51, 0, 102));
+                displayRects[20 * 40 + 16].setFillColor(Color(153, 0, 102));
+                displayRects[26 * 40 + 20].setFillColor(Color(204, 204, 0));
+                displayRects[19 * 40 + 22].setFillColor(Color(51, 0, 102));
+                displayRects[34 * 40 + 10].setFillColor(Color(204, 204, 0));
+                displayRects[19 * 40 + 38].setFillColor(Color(0, 153, 76));
+                displayRects[37 * 40 + 20].setFillColor(Color(153, 0, 0));
             }
            
 
@@ -490,14 +690,14 @@ void Map3() {
 }
 
 void Map4() {
-    window.clear(sf::Color(255, 255, 255));
+    window.clear(sf::Color(0, 0, 0));
     wallTexture4.loadFromFile("lawa.png");
     for (int i = 0; i < 40; i++) {
         for (int j = 0; j < 40; j++) {
             displayRects[i + j * 40].setPosition(i * 25.f, j * 25.f);
             displayRects[i + j * 40].setSize(sf::Vector2f(25.f, 25.f));
-
-            displayRects[i + j * 40].setOutlineColor(sf::Color(255, 255, 255));
+            displayRects[i + j * 40].setOutlineThickness(1.f);
+            displayRects[i + j * 40].setOutlineColor(sf::Color(0, 0, 0));
 
 
             if ((i == 1 && (j == 4 || j == 10 || j == 17)) ||
@@ -550,7 +750,23 @@ void Map4() {
             }
             else
             {
+                //(y/x)
                 displayRects[i + j * 40].setFillColor(Color::Black);
+                displayRects[5 * 40 + 29].setFillColor(Color::Red);
+                displayRects[2 * 40 + 28].setFillColor(Color(0, 153, 153));
+                displayRects[10 * 40 + 22].setFillColor(Color(255, 51, 51));
+                displayRects[22 * 40 + 15].setFillColor(Color(153, 0, 76));
+                displayRects[20 * 40 + 34].setFillColor(Color(51, 255, 51));
+                displayRects[34 * 40 + 17].setFillColor(Color(127, 0, 255));
+                displayRects[37 * 40 + 20].setFillColor(Color(153, 0, 0));
+                displayRects[20 * 40 + 9].setFillColor(Color(51, 0, 102));
+                displayRects[6 * 40 + 20].setFillColor(Color(51, 0, 102));
+                displayRects[20 * 40 + 16].setFillColor(Color(153, 0, 102));
+                displayRects[26 * 40 + 20].setFillColor(Color(204, 204, 0));
+                displayRects[19 * 40 + 22].setFillColor(Color(51, 0, 102));
+                displayRects[34 * 40 + 10].setFillColor(Color(204, 204, 0));
+                displayRects[19 * 40 + 38].setFillColor(Color(0, 153, 76));
+                displayRects[37 * 40 + 20].setFillColor(Color(153, 0, 0));
             }
 
 
