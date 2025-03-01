@@ -80,21 +80,41 @@ void drawRoundedTextBox(sf::RenderWindow& window, sf::Text& text, sf::Color boxC
     window.draw(text);
 }
 void ThxForPlay(int minutes, int seconds) {
-    window.clear(sf::Color(0, 0, 0));
-    sf::Text text("Thank you For Playing", font, 90);
-    text.setFillColor(sf::Color::White);
-    text.setPosition(50, 300);
-    window.draw(text);
+    bool waitingForExit = true;
 
-    char buffer[50];
-    sprintf_s(buffer, "Time: %d minutes %d seconds", minutes, seconds);
-    sf::Text timeText(buffer, font, 50);
-    timeText.setFillColor(sf::Color::White);
-    timeText.setPosition(50, 650);
-    window.draw(timeText);
+    while (waitingForExit && window.isOpen()) {
+        window.clear(sf::Color(0, 0, 0));
 
-    window.display();
+        sf::Text text("Thank you For Playing", font, 90);
+        text.setFillColor(sf::Color::White);
+        text.setPosition(50, 300);
+        window.draw(text);
 
+        char buffer[50];
+        sprintf_s(buffer, "Time: %d minutes %d seconds", minutes, seconds);
+        sf::Text timeText(buffer, font, 50);
+        timeText.setFillColor(sf::Color::White);
+        timeText.setPosition(50, 650);
+        window.draw(timeText);
+
+        sf::Text EXIT("Press Esc to exit", font, 50);
+        EXIT.setFillColor(sf::Color::White);
+        EXIT.setPosition(300, 500);
+        window.draw(EXIT);
+
+        window.display();
+
+        // ตรวจจับปุ่มกดเพื่อปิดหน้าจอ
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                waitingForExit = false;
+            }
+        }
+    }
 }
 
 
